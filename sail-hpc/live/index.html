@@ -19,7 +19,7 @@
     html = html.replace('<head>', '<head><base href="/sail-hpc/"><link rel="stylesheet" href="assets/css/workspace-depth8.css?v=' + token + '">');
     html = html.replace(/\s*<script type="module" src="src\/ui\/learning-depth\.js[^>]*><\/script>/, '');
     html = html.replace('src/ui/certificate-final.js?v=depth6-20260828', 'src/ui/certificate-final.js?v=depth7-20260828');
-    html = html.replace('</body>', '<script type="module" src="src/ui/workspace-depth8.js?v=' + token + '"><\/script></body>');
+    html = html.replace('</body>', '<script type="module" src="src/ui/workspace-depth8.js?v=' + token + '"><\/script><script>setTimeout(()=>{if(!location.hash||location.hash==="#/")location.hash="#/learn"},350)<\/script></body>');
     document.open();
     document.write(html);
     document.close();
