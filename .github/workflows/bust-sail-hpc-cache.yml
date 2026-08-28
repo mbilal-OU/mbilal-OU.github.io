@@ -1,0 +1,70 @@
+name: Force-refresh SAIL-HPC learning modules
+
+on:
+  push:
+    paths:
+      - .github/workflows/bust-sail-hpc-cache.yml
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public site
+        uses: actions/checkout@v4
+
+      - name: Version every SAIL-HPC browser asset in the learning chain
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          token = "depth5-20260828"
+
+          index = Path("sail-hpc/index.html")
+          text = index.read_text()
+          replacements = {
+              'href="assets/css/sail.css"': f'href="assets/css/sail.css?v={token}"',
+              'src="src/ui/app.js"': f'src="src/ui/app.js?v={token}"',
+              'src="src/ui/script-launcher.js"': f'src="src/ui/script-launcher.js?v={token}"',
+              'src="src/ui/certificate-final.js"': f'src="src/ui/certificate-final.js?v={token}"',
+          }
+          for old, new in replacements.items():
+              if old in text:
+                  text = text.replace(old, new)
+              elif new not in text:
+                  raise SystemExit(f"Expected asset reference not found: {old}")
+          index.write_text(text)
+
+          cert = Path("sail-hpc/src/ui/certificate-final.js")
+          text = cert.read_text()
+          text = text.replace('import "./learning-depth.js?rc=depth4";', f'import "./learning-depth.js?rc={token}";')
+          text = text.replace('const DEPLOY_MARKER = "depth4-2026-08-27";', f'const DEPLOY_MARKER = "{token}";')
+          cert.write_text(text)
+
+          depth = Path("sail-hpc/src/ui/learning-depth.js")
+          text = depth.read_text()
+          text = text.replace('link.href = "assets/css/learning-depth.css";', f'link.href = "assets/css/learning-depth.css?v={token}";')
+          depth.write_text(text)
+
+          # Visible-in-source deployment marker for troubleshooting.
+          marker = Path("sail-hpc/DEPLOYMENT.txt")
+          marker.write_text(f"SAIL-HPC public preview asset token: {token}\n")
+          PY
+
+      - name: Verify deep-learning chain
+        run: |
+          grep -q 'certificate-final.js?v=depth5-20260828' sail-hpc/index.html
+          grep -q 'learning-depth.js?rc=depth5-20260828' sail-hpc/src/ui/certificate-final.js
+          grep -q 'learning-depth.css?v=depth5-20260828' sail-hpc/src/ui/learning-depth.js
+          grep -q 'Slurm Building Lab' sail-hpc/src/ui/learning-depth.js
+          grep -q 'Commands, directives and real-cluster literacy' sail-hpc/src/ui/learning-depth.js
+
+      - name: Commit forced-refresh deployment
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sail-hpc
+          git commit -m "Force-refresh SAIL-HPC deep learning interface"
+          git push
