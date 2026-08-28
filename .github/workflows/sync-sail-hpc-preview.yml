@@ -1,0 +1,59 @@
+name: Sync SAIL-HPC preview
+
+on:
+  push:
+    paths:
+      - .github/workflows/sync-sail-hpc-preview.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public site
+        uses: actions/checkout@v4
+
+      - name: Download tested SAIL-HPC Pages artifact
+        env:
+          ARTIFACT_URL: "https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-5f74-81f7-9901-93ef0f282e6c/raw?se=2026-08-28T04%3A13%3A50Z&sp=r&sv=2026-02-06&sr=b&scid=5f879e12-cc7f-5372-b88f-b7b1c542c581&skoid=732f244e-db13-47c3-bcc7-7ee02a9397bc&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-28T03%3A12%3A31Z&ske=2026-08-29T03%3A12%3A31Z&sks=b&skv=2026-02-06&sig=pbn8gjmKHz7I32J4mNs2KDJjhglY%2BzELlUzyREXvemQ%3D"
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 "$ARTIFACT_URL" -o /tmp/sail-pages.zip
+          rm -rf /tmp/sail-pages /tmp/sail-app
+          mkdir -p /tmp/sail-pages /tmp/sail-app
+          unzip -q /tmp/sail-pages.zip -d /tmp/sail-pages
+          tar -xf /tmp/sail-pages/artifact.tar -C /tmp/sail-app
+          test -f /tmp/sail-app/index.html
+          test -f /tmp/sail-app/src/ui/learning-depth.js
+
+      - name: Replace public preview with tested RC app
+        run: |
+          set -euo pipefail
+          rm -rf sail-hpc
+          mkdir -p sail-hpc
+          cp /tmp/sail-app/index.html sail-hpc/index.html
+          cp -R /tmp/sail-app/assets sail-hpc/assets
+          cp -R /tmp/sail-app/src sail-hpc/src
+          touch sail-hpc/.nojekyll
+          grep -q "SAIL-HPC Practical Readiness Examination" sail-hpc/src/ui/learning-depth.js
+          grep -q "Slurm Building Lab" sail-hpc/src/ui/learning-depth.js
+          if grep -q "fetch('/FORGE-Slurm-Lab" sail-hpc/index.html; then
+            echo "Legacy proxy detected" >&2
+            exit 1
+          fi
+
+      - name: Commit exact preview files
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sail-hpc
+          if git diff --cached --quiet; then
+            echo "Preview already matches tested artifact."
+            exit 0
+          fi
+          git commit -m "Deploy tested SAIL-HPC release-candidate preview"
+          git push
