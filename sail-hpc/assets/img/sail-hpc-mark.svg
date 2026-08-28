@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">SAIL-HPC scheduler-aware learning mark</title>
+  <desc id="desc">Four connected compute nodes forming an abstract S and learning path.</desc>
+  <rect width="64" height="64" rx="14" fill="#12171d"/>
+  <g fill="none" stroke="#f29a38" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 18h22c5 0 8 3 8 7s-3 7-8 7H24c-5 0-8 3-8 7s3 7 8 7h22"/>
+    <path d="M24 12v12M40 40v12" opacity=".72"/>
+  </g>
+  <g fill="#eef2f6" stroke="#0b0e12" stroke-width="2">
+    <circle cx="18" cy="18" r="5"/>
+    <circle cx="46" cy="18" r="5"/>
+    <circle cx="18" cy="46" r="5"/>
+    <circle cx="46" cy="46" r="5"/>
+  </g>
+  <circle cx="18" cy="18" r="2" fill="#f29a38"/>
+  <circle cx="46" cy="46" r="2" fill="#f29a38"/>
+</svg>

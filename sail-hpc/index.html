@@ -2,53 +2,222 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SAIL-HPC, Simulation-Augmented Interactive Learning for High-Performance Computing, is a browser-first Slurm/HPC training environment for guided learning, pipeline-to-Slurm preparation, deterministic simulation, diagnosis, revision, assessment and transfer to real clusters.">
   <meta name="theme-color" content="#0b0e12">
-  <meta name="description" content="SAIL-HPC interactive development preview.">
-  <title>SAIL-HPC | Loading current preview</title>
-  <style>
-    :root{color-scheme:dark;--bg:#0b0e12;--panel:#12171d;--line:#2b333e;--text:#eef2f6;--muted:#a8b2bd;--accent:#f29a38}
-    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--text);font:16px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    .loader{width:min(560px,calc(100% - 2rem));padding:1.5rem;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
-    .brand{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}.mark{width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(242,154,56,.55);border-radius:12px;background:rgba(242,154,56,.1);color:var(--accent);font-weight:800}.brand strong{font-size:1.1rem}.loader p{color:var(--muted);margin:.5rem 0 0}.error{color:#ff9b9b}.retry{display:inline-block;margin-top:1rem;color:var(--accent)}
-  </style>
+  <meta property="og:title" content="SAIL-HPC">
+  <meta property="og:description" content="Learn the scheduler. Build with confidence. Practice before the real cluster.">
+  <meta property="og:type" content="website">
+  <title>SAIL-HPC | Simulation-Augmented Interactive Learning for HPC</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/sail.css">
 </head>
 <body>
-  <main class="loader" aria-live="polite">
-    <div class="brand"><div class="mark">S</div><strong>SAIL-HPC</strong></div>
-    <strong>Loading the current interactive release candidate…</strong>
-    <p id="status">Fetching the latest publication build.</p>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="topbar">
+    <button class="brand-button" type="button" data-route="home" aria-label="SAIL-HPC home">
+      <img src="assets/img/sail-hpc-mark.svg" alt="" width="42" height="42">
+      <span class="brand-copy">
+        <strong>SAIL-HPC</strong>
+        <small>Simulation-Augmented Interactive Learning for High-Performance Computing</small>
+      </span>
+    </button>
+    <nav class="topnav" aria-label="Global navigation">
+      <button type="button" class="nav-button" data-route="learn">Learn</button>
+      <button type="button" class="nav-button" data-route="practice">Practice</button>
+      <button type="button" class="nav-button" data-route="scenarios">Scenarios</button>
+      <button type="button" class="nav-button" data-route="assessment">Test yourself</button>
+      <button type="button" class="nav-button" id="help-button">Help</button>
+    </nav>
+    <div class="version-pill" aria-label="Application version">v1.0.0-rc1</div>
+  </header>
+
+  <div class="workspace-bar" id="workspace-bar" hidden>
+    <button type="button" class="crumb-home" data-route="home">Home</button>
+    <span aria-hidden="true">›</span>
+    <strong id="workspace-title">Workspace</strong>
+    <div class="workspace-actions">
+      <button type="button" class="subtle" id="workspace-reset">Reset workspace</button>
+      <button type="button" class="subtle" id="model-boundary-button">Model boundary</button>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <section class="view view-home" data-view="home">
+      <div class="home-shell">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">Scientific HPC learning environment</span>
+            <h1>Learn the scheduler.<br>Build with confidence.<br><span>Practice</span> before the real cluster.</h1>
+            <p>SAIL-HPC is a deterministic training model for Slurm and scientific HPC workflows. Learn, simulate, diagnose, revise and build confidence before using a real cluster.</p>
+          </div>
+          <aside class="model-card">
+            <div class="model-icon" aria-hidden="true">◎</div>
+            <div>
+              <strong>This is a deterministic training model.</strong>
+              <p>SAIL-HPC simulates selected Slurm behavior in a reproducible environment. It does not run real jobs or consume real cluster resources.</p>
+            </div>
+          </aside>
+        </div>
+
+        <div class="intent-grid" aria-label="Choose how to start">
+          <article class="intent-card">
+            <div class="intent-icon" aria-hidden="true">⌘</div>
+            <div class="intent-body">
+              <h2>I have my own pipeline</h2>
+              <p>Bring Python, R, Bash, Julia, MATLAB, Perl, Java, compiled executables, workflow engines or a custom shell command.</p>
+              <button class="primary" type="button" data-route="pipeline">Bring in my pipeline <span aria-hidden="true">→</span></button>
+            </div>
+          </article>
+          <article class="intent-card">
+            <div class="intent-icon" aria-hidden="true">◫</div>
+            <div class="intent-body">
+              <h2>I want to learn</h2>
+              <p>Follow a guided beginner path from cluster basics to job diagnosis and real-cluster transfer.</p>
+              <button class="primary" type="button" data-route="learn">Start learning <span aria-hidden="true">→</span></button>
+            </div>
+          </article>
+          <article class="intent-card">
+            <div class="intent-icon terminal-glyph" aria-hidden="true">&gt;_</div>
+            <div class="intent-body">
+              <h2>I want to practice</h2>
+              <p>Use a focused Slurm-like terminal, clickable command cards and scientific scheduler scenarios.</p>
+              <button class="primary" type="button" data-route="practice">Start practice <span aria-hidden="true">→</span></button>
+            </div>
+          </article>
+          <article class="intent-card">
+            <div class="intent-icon" aria-hidden="true">◎</div>
+            <div class="intent-body">
+              <h2>I want to test myself</h2>
+              <p>Complete the 100-point beginner transfer check without guided answer scaffolding.</p>
+              <button class="primary" type="button" data-route="assessment">Start assessment <span aria-hidden="true">→</span></button>
+            </div>
+          </article>
+        </div>
+
+        <section class="home-section">
+          <div class="home-section-head">
+            <div>
+              <span class="eyebrow">Explore scientific scenarios</span>
+              <h2>Practice the scheduler through recognizable workloads</h2>
+            </div>
+            <button type="button" class="text-button" data-route="scenarios">View all scenarios →</button>
+          </div>
+          <div class="scenario-mini-grid" id="home-scenarios"></div>
+        </section>
+
+        <section class="workflow-panel" aria-label="SAIL-HPC learning workflow">
+          <div class="workflow-title">A workflow for confident HPC use</div>
+          <ol class="workflow-steps">
+            <li><span>1</span><strong>Prepare</strong><small>Understand the task and execution environment</small></li>
+            <li><span>2</span><strong>Build</strong><small>Create a transparent Slurm request</small></li>
+            <li><span>3</span><strong>Test</strong><small>Submit to the deterministic training model</small></li>
+            <li><span>4</span><strong>Observe</strong><small>Inspect state, queue and resources</small></li>
+            <li><span>5</span><strong>Diagnose</strong><small>Understand modeled outcomes and failures</small></li>
+            <li><span>6</span><strong>Revise</strong><small>Change the request with evidence</small></li>
+            <li><span>7</span><strong>Challenge</strong><small>Try independent tasks without answer prompts</small></li>
+            <li><span>8</span><strong>Transfer</strong><small>Adapt the exported script to the real institution</small></li>
+          </ol>
+        </section>
+      </div>
+    </section>
+
+    <section class="view" data-view="pipeline" id="script-to-slurm" hidden>
+      <div class="workspace-shell two-col pipeline-layout">
+        <section class="workspace-main">
+          <div class="page-head">
+            <span class="eyebrow">Prepare</span>
+            <h1>Bring in your own pipeline</h1>
+            <p>Describe how your workload runs. SAIL-HPC will carry the command into the same canonical JobSpec Builder used by the scientific training scenarios.</p>
+          </div>
+
+          <article class="panel">
+            <div class="panel-head"><div><h2>How does your pipeline run?</h2><p>Choose a common runtime or use Custom for any shell command.</p></div></div>
+            <div class="panel-body">
+              <label>Script / pipeline type
+                <select id="launcher-language">
+                  <option value="python">Python</option><option value="r">R</option><option value="bash">Bash / shell</option><option value="julia">Julia</option><option value="matlab">MATLAB</option><option value="perl">Perl</option><option value="java">Java / JAR</option><option value="node">Node.js</option><option value="ruby">Ruby</option><option value="php">PHP CLI</option><option value="compiled">Compiled executable (C/C++/Rust/Go/etc.)</option><option value="nextflow">Nextflow</option><option value="snakemake">Snakemake</option><option value="cwl">CWL / cwltool</option><option value="wdl">WDL / Cromwell</option><option value="jupyter">Jupyter notebook via nbconvert</option><option value="container">Container command</option><option value="custom">Custom shell command</option>
+                </select>
+              </label>
+              <label>Script, workflow, executable or command target
+                <div class="input-with-action"><input id="launcher-script" value="analysis.py" autocomplete="off"><label class="file-button">Choose local text file<input id="pipeline-file" type="file" accept=".py,.R,.r,.sh,.bash,.jl,.m,.pl,.java,.js,.rb,.php,.nf,.smk,.snakefile,.cwl,.wdl,.txt,.yaml,.yml,.json" hidden></label></div>
+                <span class="field-note">Local file selection is optional and stays in your browser. SAIL-HPC does not upload or execute it.</span>
+              </label>
+              <label>Arguments <span class="field-note">optional</span><input id="launcher-args" value="input.tsv results.tsv" autocomplete="off"></label>
+              <details class="disclosure"><summary>Environment and paths</summary><div class="disclosure-body field-grid"><label>Site module <span class="field-note">optional, cluster-specific</span><input id="launcher-module" value="Python" autocomplete="off"></label><label>Conda environment <span class="field-note">optional</span><input id="launcher-conda" placeholder="my-env" autocomplete="off"></label><label class="full">Working directory <span class="field-note">optional</span><input id="launcher-workdir" placeholder="/path/to/project" autocomplete="off"></label></div></details>
+              <div class="command-preview"><span>Non-interactive shell command preview</span><code id="launcher-summary" role="status" aria-live="polite"></code></div>
+              <div class="actions"><button class="primary" type="button" id="launcher-load-builder">Continue to Slurm Builder →</button><button type="button" id="launcher-copy-command">Copy command</button></div>
+            </div>
+          </article>
+        </section>
+        <aside class="workspace-side">
+          <article class="panel compact-panel"><div class="panel-head"><h2>Batch-ready checklist</h2></div><div class="panel-body checklist" id="pipeline-checklist"><span data-check="target">○ Target or command provided</span><span data-check="args">○ Arguments considered</span><span data-check="environment">○ Environment considered</span><span data-check="outputs">○ Outputs should go to files</span><span data-check="interactive">○ No interactive input during batch execution</span></div></article>
+          <article class="panel compact-panel"><div class="panel-head"><h2>Only what matters for batch execution</h2></div><div class="panel-body"><ul class="compact-list" id="language-essentials"></ul></div></article>
+          <article class="panel compact-panel"><div class="panel-head"><h2>Minimal pattern</h2></div><div class="panel-body"><pre id="language-snippet" class="mini-code"></pre><pre id="language-local-command" class="mini-code muted-code"></pre></div></article>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view" data-view="learn" hidden>
+      <div class="workspace-shell tutorial-layout">
+        <aside class="tutorial-sidebar panel"><div class="panel-head stacked"><div><span class="eyebrow">Beginner path</span><h2>Tutorial path</h2></div><div class="progress-row"><span id="lesson-progress-text">0 of 13 completed</span><div class="progress"><span id="lesson-progress-bar"></span></div></div></div><nav class="lesson-list" id="lesson-list" aria-label="Tutorial lessons"></nav><button type="button" class="secondary-wide" id="download-cheatsheet">Download command cheat sheet</button></aside>
+        <section class="tutorial-content panel">
+          <div class="lesson-header"><div><span class="eyebrow" id="lesson-kicker">Lesson 1 of 13</span><h1 id="lesson-title">What is an HPC cluster?</h1></div><div class="lesson-percent" id="lesson-percent">0% complete</div></div>
+          <div class="lesson-copy" id="lesson-copy"></div>
+          <article class="try-card" id="lesson-try-card"><div class="try-head"><div><span class="terminal-glyph" aria-hidden="true">&gt;_</span><strong>Try this</strong></div><button type="button" class="subtle" id="lesson-why">Why this matters</button></div><p id="lesson-task"></p><div class="lesson-command-card" id="lesson-command-card"><code id="lesson-command">sinfo</code><button type="button" class="primary" id="lesson-insert">Insert in terminal →</button></div><pre id="lesson-example-output" class="terminal-example"></pre></article>
+          <div class="tip-strip" id="lesson-tip"></div>
+          <div class="lesson-nav"><button type="button" id="lesson-prev">← Previous lesson</button><button class="primary" type="button" id="lesson-next">Next lesson →</button></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="view" data-view="practice" hidden>
+      <div class="workspace-shell practice-layout">
+        <section class="workspace-main"><div class="page-head inline-head"><div><span class="mode-chip">● Practice mode</span><h1>Terminal Practice</h1><p>Use the publication-supported Slurm subset in a safe deterministic training environment.</p></div><button type="button" id="terminal-clear">Clear terminal</button></div><div class="terminal-shell"><div class="terminal-output" id="terminal-output" role="log" aria-live="polite" aria-label="Terminal output"></div><form class="terminal-form" id="terminal-form" autocomplete="off"><span aria-hidden="true">student@sail-login:~$</span><label class="sr-only" for="terminal-input">SAIL-HPC terminal command</label><input class="terminal-input" id="terminal-input" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="type a supported command"><button type="submit" class="primary">Run</button></form></div><p class="boundary-note">Unsupported or unsafe commands are rejected. This is a training terminal, not a shell on a real cluster.</p></section>
+        <aside class="workspace-side panel command-catalog-panel"><div class="panel-head stacked"><h2>Use these commands</h2><p>Click a command to insert it into the terminal. It will not run until you choose Run.</p></div><div class="panel-body command-groups" id="command-catalog"></div></aside>
+      </div>
+    </section>
+
+    <section class="view" data-view="scenarios" hidden><div class="workspace-shell single-col"><div class="page-head inline-head"><div><span class="eyebrow">Scientific scenarios</span><h1>Practice resource reasoning in context</h1><p>Each versioned scenario teaches a specific HPC concept. Resource values are pedagogical scenario parameters, not production recommendations.</p></div><div class="scenario-filters" id="scenario-filters"></div></div><div class="scenario-grid" id="scenario-grid"></div></div></section>
+
+    <section class="view" data-view="builder" id="builder" hidden>
+      <div class="workspace-shell two-col builder-layout">
+        <section class="workspace-main panel"><div class="panel-head stacked"><div><span class="eyebrow">Build</span><h1>Build your Slurm job</h1></div><p>Configure the essential request first. Advanced and simulation-only controls stay hidden until you need them.</p></div><div class="panel-body"><label>Scientific training scenario<select id="scenario-select"></select></label><div class="scenario-context"><strong id="scenario-objective"></strong><span id="scenario-boundary"></span></div><div class="field-grid basic-builder-grid"><label>Job name<input id="job-name" maxlength="50" autocomplete="off"></label><label>Partition<select id="partition"><option value="short">short</option><option value="compute">compute</option><option value="highmem">highmem</option><option value="gpu">gpu</option></select></label><label>CPU / cores<input id="cpus" type="number" min="1" max="128"></label><label>Memory (GB)<input id="memory-gb" type="number" min="0.1" step="0.1"></label><label>Walltime<input id="walltime" placeholder="01:00:00"></label><label class="full">Command<textarea id="command-block" spellcheck="false"></textarea></label></div>
+          <details class="disclosure"><summary>Advanced options <span>GPU, arrays, dependencies, modules, Conda, paths</span></summary><div class="disclosure-body field-grid"><label>GPUs<input id="gpus" type="number" min="0" max="4"></label><label>Array specification <span class="field-note">optional: 1-12%3</span><input id="array-spec" autocomplete="off"></label><label class="full">Dependency <span class="field-note">optional: afterok:73001</span><input id="dependency" autocomplete="off"></label><label>Modules <span class="field-note">comma-separated</span><input id="modules" autocomplete="off"></label><label>Conda environment<input id="builder-conda" autocomplete="off"></label><label class="full">Working directory<input id="working-directory" autocomplete="off"></label></div></details>
+          <details class="disclosure training-controls"><summary>Training model controls <span>simulation only</span></summary><div class="disclosure-body"><p class="boundary-note">Used only by SAIL-HPC to produce deterministic educational outcomes. These values are not measured and are not submitted to Slurm.</p><div class="field-grid"><label>Modeled runtime (seconds)<input id="modeled-runtime" type="number" min="1"></label><label>Modeled peak memory (GB)<input id="modeled-peak-memory" type="number" min="0.1" step="0.1"></label></div></div></details>
+          <div class="actions"><button class="primary" type="button" id="test-job">Test in deterministic simulator →</button><button type="button" id="load-selected">Load selected job to revise</button><button type="button" id="apply-revision">Apply guided revision</button></div><div class="status-message" id="status-message" role="status" aria-live="polite"></div></div></section>
+        <aside class="workspace-side panel preview-panel"><div class="panel-head stacked"><div><span class="eyebrow">Generated output</span><h2>Generated Slurm script</h2></div><small>Transparent, ordinary and exportable</small></div><div class="panel-body preview-body"><pre class="script-preview" id="script-preview" aria-label="Generated Slurm script"></pre><div class="validation" id="builder-validation" role="status"></div><div class="resource-summary" id="builder-resource-summary"></div><div class="actions"><button type="button" id="copy-script">Copy script</button><button type="button" id="download-script">Export .sh</button><button type="button" id="download-record">Export simulation record</button></div><details class="disclosure import-existing"><summary>Parse an existing Slurm script</summary><div class="disclosure-body"><label>Paste script<textarea id="import-text" spellcheck="false" placeholder="#!/bin/bash&#10;#SBATCH --job-name=analysis"></textarea></label><button type="button" id="import-script">Parse into Builder</button></div></details></div></aside>
+      </div>
+    </section>
+
+    <section class="view" data-view="observe" hidden>
+      <div class="workspace-shell single-col"><div class="metrics-strip" aria-label="Training cluster state"><div><span>Simulation clock</span><strong id="clock-value">0s</strong></div><div><span>Running</span><strong id="running-value">0</strong></div><div><span>Pending</span><strong id="pending-value">0</strong></div><div><span>CPU allocated</span><strong id="cpu-value">0/0</strong></div><div><span>Memory allocated</span><strong id="memory-value">0/0 GB</strong></div><div id="gpu-metric"><span>GPU allocated</span><strong id="gpu-value">0/0</strong></div><span id="jobs-value" hidden>0 R · 0 PD</span></div>
+        <div class="observe-layout"><section class="panel jobs-panel"><div class="panel-head inline-head"><div><span class="eyebrow">Observe</span><h1>Jobs</h1></div><div class="actions compact-actions"><button type="button" id="advance-60">+60s</button><button type="button" id="advance-600">+10m</button><button type="button" id="run-long">Run to outcome</button><button type="button" id="reset-simulation">Reset</button></div></div><div class="panel-body"><div class="table-empty" id="queue-empty">No jobs yet. Build or load a workload, then choose Test in deterministic simulator.</div><div class="table-wrap" id="queue-wrap" hidden><table><thead><tr><th>Job ID</th><th>Name</th><th>State</th><th>Reason</th><th>CPU</th><th>Memory</th><th>Node</th></tr></thead><tbody id="queue-body"></tbody></table></div><div class="array-summary" id="array-summary" aria-label="Array summaries" hidden></div><details class="disclosure resources-disclosure" id="resource-disclosure"><summary>Show training-cluster resources</summary><div class="disclosure-body node-cards" id="node-cards"></div></details></div></section>
+          <aside class="panel diagnosis-panel"><div class="panel-head stacked"><div><span class="eyebrow">Diagnose · Revise</span><h2>Selected job</h2></div></div><div class="panel-body"><div id="diagnosis" class="diagnosis-card">Select a job to understand its modeled outcome.</div><div id="accounting" class="accounting-card">Synthetic accounting appears after a job reaches a terminal state.</div><div id="revision-comparison" class="comparison-card" hidden></div><div class="actions"><button class="primary" type="button" id="diagnose-revise">Revise this job →</button><button type="button" data-route="practice">Open terminal</button></div></div></aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" data-view="assessment" hidden>
+      <div class="workspace-shell assessment-layout"><section class="workspace-main"><div class="page-head inline-head"><div><span class="eyebrow">Independent mode</span><h1>100-point beginner transfer check</h1><p>No guided revision button and no answer-revealing command cards. Complete the tasks by producing the requested outcomes.</p></div><div class="score-ring" aria-label="Assessment score"><strong id="assessment-score">0</strong><span>/100</span></div></div><div class="assessment-tabs" role="tablist" aria-label="Assessment sections"><button class="active" type="button" data-assessment-tab="tasks">Assessment</button><button type="button" data-assessment-tab="review">Key takeaways</button></div><div id="assessment-task-list" class="assessment-list"></div><div id="assessment-review" class="panel assessment-review" hidden></div></section>
+        <aside class="workspace-side"><article class="panel score-panel"><div class="panel-head"><h2>Score breakdown</h2></div><div class="panel-body" id="score-breakdown"></div></article><article class="panel transfer-result-panel"><div class="panel-body"><div class="result-icon" id="result-icon">◎</div><h2 id="assessment-result-title">More practice recommended</h2><p id="assessment-result-copy">Complete the independent tasks to build a transfer-readiness practice score.</p><button class="primary" type="button" id="claim-certificate" disabled>Claim completion certificate</button><button type="button" id="reset-assessment">Reset assessment</button></div></article></aside>
+      </div>
+    </section>
+
+    <section class="view" data-view="certificate" hidden>
+      <div class="workspace-shell certificate-layout"><section class="workspace-main panel"><div class="panel-head stacked"><div><span class="eyebrow">100/100 practice completion</span><h1>Claim your certificate</h1></div><p>This is a SAIL-HPC practice-completion artifact, not a professional license or certification to operate every HPC system independently.</p></div><div class="panel-body certificate-form"><label>Full name<input id="certificate-name" autocomplete="name" required></label><label>Email<input id="certificate-email" type="email" autocomplete="email" required></label><label>Affiliation<input id="certificate-affiliation" autocomplete="organization" required></label><label>Country<input id="certificate-country" autocomplete="country-name" required></label><p class="privacy-inline">These fields are used locally in your browser to generate the completion certificate. No backend execution, no hidden telemetry, and no credential collection are used.</p><div class="actions"><button class="primary" type="button" id="generate-certificate">Generate certificate</button><button type="button" id="download-certificate" disabled>Download SVG</button><button type="button" id="print-certificate" disabled>Print / Save as PDF</button></div><div class="status-message" id="certificate-status" role="status" aria-live="polite"></div></div></section>
+        <aside class="workspace-side certificate-preview-panel"><div class="certificate-preview" id="certificate-preview" aria-label="Certificate preview"><div class="certificate-mark"><img src="assets/img/sail-hpc-mark.svg" alt="" width="54" height="54"><strong>SAIL-HPC</strong></div><div class="certificate-kicker">Certificate of Practice Completion</div><div class="certificate-certifies">This certifies that</div><div class="certificate-name-preview" id="certificate-name-preview">Your Name</div><div class="certificate-affiliation-preview" id="certificate-affiliation-preview">Your affiliation · Country</div><div class="certificate-line"></div><p>completed the</p><strong>SAIL-HPC Beginner Transfer Check</strong><div class="certificate-seal">100%</div><div class="certificate-meta"><span id="certificate-date-preview">Date</span><span>100 / 100</span><span id="certificate-id-preview">Certificate ID</span></div><small>Simulation-Augmented Interactive Learning for High-Performance Computing</small></div></aside>
+      </div>
+    </section>
   </main>
-  <script>
-  (async () => {
-    const BUILD = "depth4-20260827";
-    const source = `/FORGE-Slurm-Lab/index.html?preview=${BUILD}`;
-    const status = document.getElementById("status");
-    try {
-      const response = await fetch(source, { cache: "no-store" });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      let html = await response.text();
-      if (!html.includes("SAIL-HPC")) throw new Error("The publication deployment did not return SAIL-HPC.");
-      html = html.replace("<head>", `<head><base href="/FORGE-Slurm-Lab/">`);
-      html = html.replace('href="assets/css/sail.css"', `href="assets/css/sail.css?rc=${BUILD}"`);
-      html = html.replace('href="assets/img/favicon.svg"', `href="assets/img/favicon.svg?rc=${BUILD}"`);
-      html = html.replace('src="src/ui/app.js"', `src="src/ui/app.js?rc=${BUILD}"`);
-      html = html.replace('src="src/ui/script-launcher.js"', `src="src/ui/script-launcher.js?rc=${BUILD}"`);
-      html = html.replace('src="src/ui/certificate-final.js"', `src="src/ui/certificate-final.js?rc=${BUILD}"`);
-      html = html.replace("</body>", `<div data-sail-preview-build="${BUILD}" hidden></div></body>`);
-      document.open();
-      document.write(html);
-      document.close();
-    } catch (error) {
-      status.className = "error";
-      status.textContent = `Could not load the current SAIL-HPC preview: ${error.message}`;
-      const retry = document.createElement("a");
-      retry.className = "retry";
-      retry.href = location.href;
-      retry.textContent = "Retry";
-      status.after(retry);
-    }
-  })();
-  </script>
+
+  <dialog id="help-dialog"><form method="dialog" class="dialog-card"><button class="dialog-close" aria-label="Close">×</button><span class="eyebrow">SAIL-HPC</span><h2>How this environment works</h2><p>SAIL-HPC is a browser-only deterministic educational scheduler model. It is Slurm-focused, unaffiliated with SchedMD, and does not execute Python, R or scientific software.</p><ul><li>Learn concepts through guided lessons.</li><li>Bring your own pipeline or use scientific scenarios.</li><li>Build and export ordinary Slurm scripts.</li><li>Observe modeled scheduler/resource consequences.</li><li>Use assessment mode for independent practice.</li></ul><p class="boundary-note">No credentials · no backend execution · no hidden telemetry.</p></form></dialog>
+
+  <footer><div><strong>SAIL-HPC</strong> · Simulation-Augmented Interactive Learning for High-Performance Computing</div><div>Browser-only deterministic educational scheduler model · no credentials · no backend execution · no hidden telemetry · MIT licensed · unaffiliated with SchedMD</div></footer>
+
+  <script type="module" src="src/ui/app.js"></script>
+  <script type="module" src="src/ui/script-launcher.js"></script>
+  <script type="module" src="src/ui/certificate-final.js"></script>
 </body>
 </html>
