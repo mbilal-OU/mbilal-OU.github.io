@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b0e12">
+  <title>SAIL-HPC Next</title>
+  <style>html,body{margin:0;min-height:100%;background:#070b0f;color:#eef2f6;font-family:Arial,Helvetica,sans-serif}main{min-height:100vh;display:grid;place-items:center}.load{max-width:680px;padding:40px;text-align:center}.load strong{font-size:30px}.load p{color:#a8b2bd;line-height:1.6}</style>
+</head>
+<body>
+<main><div class="load"><strong>SAIL-HPC</strong><p>Loading the new integrated Slurm learning workspace…</p></div></main>
+<script>
+(async()=>{
+  const token='depth8-next-20260828';
+  try{
+    const r=await fetch('/sail-hpc/index.html?cb='+Date.now(),{cache:'no-store'});
+    if(!r.ok)throw new Error('source');
+    let h=await r.text();
+    h=h.replace('<head>','<head><base href="/sail-hpc/"><link rel="stylesheet" href="/sail-hpc/assets/css/workspace-depth8.css?v='+token+'">');
+    h=h.replace(/\s*<script type="module" src="src\/ui\/learning-depth\.js[^>]*><\/script>/,'');
+    h=h.replace('src/ui/certificate-final.js?v=depth6-20260828','src/ui/certificate-final.js?v=depth7-20260828');
+    h=h.replace('</body>','<script type="module" src="/sail-hpc/src/ui/workspace-depth8.js?v='+token+'"><\/script><script>setTimeout(()=>{location.hash=\'#/learn\'},300)<\/script></body>');
+    document.open();document.write(h);document.close();
+  }catch(e){
+    document.body.innerHTML='<main><div class="load"><strong>SAIL-HPC could not load.</strong><p>This deployment did not initialize correctly.</p></div></main>';
+  }
+})();
+</script>
+</body>
+</html>
