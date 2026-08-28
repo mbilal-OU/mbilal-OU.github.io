@@ -245,7 +245,7 @@ function injectStyles() {
   if (document.querySelector('link[data-sail-depth]')) return;
   const link = document.createElement("link");
   link.rel = "stylesheet";
-  link.href = "assets/css/learning-depth.css";
+  link.href = "assets/css/learning-depth.css?v=depth5-20260828";
   link.dataset.sailDepth = DEPTH_VERSION;
   document.head.appendChild(link);
 }

@@ -1,6 +1,6 @@
-import "./learning-depth.js?rc=depth4";
+import "./learning-depth.js?rc=depth5-20260828";
 
-const DEPLOY_MARKER = "depth4-2026-08-27";
+const DEPLOY_MARKER = "depth5-20260828";
 const LONG_FORM_NAME = "Simulation-Augmented Interactive Learning for High-Performance Computing";
 const EXAM_NAME = "SAIL-HPC Practical Readiness Examination";
 const EXAM_KEY = "sail-hpc-practical-readiness-exam-v1";
