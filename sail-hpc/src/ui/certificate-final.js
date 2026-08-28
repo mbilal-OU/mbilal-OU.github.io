@@ -1,7 +1,9 @@
-const DEPLOY_MARKER = "depth6-20260828";
+import "./learning-depth-hotfix.js?v=depth7-20260828";
+
+const DEPLOY_MARKER = "depth7-20260828";
 const LONG_FORM_NAME = "Simulation-Augmented Interactive Learning for High-Performance Computing";
 const EXAM_NAME = "SAIL-HPC Practical Readiness Examination";
-const EXAM_KEY = "sail-hpc-practical-readiness-exam-v1";
+const EXAM_KEY = "sail-hpc-practical-readiness-exam-v2";
 
 const printButton = document.getElementById("print-certificate");
 const downloadButton = document.getElementById("download-certificate");
