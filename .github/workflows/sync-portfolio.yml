@@ -1,0 +1,41 @@
+name: Sync portfolio with GitHub
+
+on:
+  push:
+    paths:
+      - scripts/sync_portfolio.py
+      - .github/workflows/sync-portfolio.yml
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Synchronize curated portfolio catalog and repository count
+        run: python scripts/sync_portfolio.py
+
+      - name: Commit synchronized portfolio when changed
+        shell: bash
+        run: |
+          if [[ -z "$(git status --porcelain -- index.html)" ]]; then
+            echo "Portfolio already synchronized."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Sync portfolio with current GitHub work"
+          git push
